@@ -1,0 +1,34 @@
+/* Footer typography stays compact and intentionally quieter than page content. */
+.site-footer {
+  font-size: .9rem;
+  letter-spacing: normal;
+}
+
+.site-footer a {
+  font-size: .82rem;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.site-footer p,
+.footer-bottom,
+.footer-disclaimer {
+  letter-spacing: -.01em;
+}
+
+.site-footer li {
+  letter-spacing: normal;
+}
+
+.site-footer h4 {
+  font-size: 1rem;
+  letter-spacing: .02em;
+}
+
+.footer__logo {
+  display: block;
+  height: 76px;
+  margin: 0 0 .9rem;
+  object-fit: contain;
+  width: 76px;
+}

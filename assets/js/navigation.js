@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+function initializeNavigation() {
   const toggle = document.querySelector(".nav__toggle");
   const links = document.getElementById("navlinks");
   if (!toggle || !links) return;
@@ -14,4 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
       toggle.setAttribute("aria-expanded", "false");
     }
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeNavigation, { once: true });
+} else {
+  initializeNavigation();
+}

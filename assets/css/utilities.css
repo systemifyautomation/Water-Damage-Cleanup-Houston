@@ -1,0 +1,15 @@
+/* Reusable layout helpers for adjacent actions. */
+.button-group {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .85rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .button-group .btn {
+    text-align: center;
+    width: 100%;
+  }
+}
