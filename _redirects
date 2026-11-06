@@ -1,28 +1,4 @@
-# Cloudflare Pages clean URL support for canonical URLs and old bookmarks.
-/about /about.html 200
-/accessibility /accessibility.html 200
-/burst-pipe-water-damage-cleanup /burst-pipe-water-damage-cleanup.html 200
-/careers /careers.html 200
-/complaints-policy /complaints-policy.html 200
-/contact /contact.html 200
-/disclaimer /disclaimer.html 200
-/emergency-water-removal /emergency-water-removal.html 200
-/estimate /estimate.html 200
-/faq /faq.html 200
-/flood-damage-cleanup /flood-damage-cleanup.html 200
-/meet-the-team /meet-the-team.html 200
-/privacy-policy /privacy-policy.html 200
-/referral-marketing-disclosure /referral-marketing-disclosure.html 200
-/service-areas /service-areas.html 200
-/services /services.html 200
-/sewage-backup-cleanup /sewage-backup-cleanup.html 200
-/terms-conditions /terms-conditions.html 200
-/thank-you /thank-you.html 200
-/water-damage-cleanup-in-braeswood /water-damage-cleanup-in-braeswood.html 200
-/water-damage-cleanup-in-kingwood /water-damage-cleanup-in-kingwood.html 200
-/water-damage-cleanup-in-memorial /water-damage-cleanup-in-memorial.html 200
-/water-damage-cleanup-in-meyerland /water-damage-cleanup-in-meyerland.html 200
-/water-damage-cleanup-in-spring-branch /water-damage-cleanup-in-spring-branch.html 200
-/water-damage-cleanup-in-westbury /water-damage-cleanup-in-westbury.html 200
-/water-damage-restoration /water-damage-restoration.html 200
-/water-extraction-services /water-extraction-services.html 200
+# Cloudflare Pages automatically serves matching static HTML files at
+# their extensionless URL (for example, /about.html is served at /about).
+# Do not proxy extensionless paths back to .html files here: that conflicts
+# with Pages' native URL normalization and creates redirect loops.

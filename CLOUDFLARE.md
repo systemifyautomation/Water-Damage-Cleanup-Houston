@@ -19,4 +19,4 @@ This is a static HTML site. Deploy the repository root directly to Cloudflare Pa
 
 ## Included Pages support
 
-The `_redirects` file preserves clean canonical URLs such as `/about` by rewriting them to their static `.html` files. Internal navigation uses direct `.html` paths so it also works in plain static previews.
+Cloudflare Pages automatically serves each static HTML page at its clean URL, such as `/about` for `about.html`, and redirects direct `.html` requests to that canonical URL. Internal navigation retains direct `.html` paths so the site also works in plain static previews.
