@@ -24,7 +24,7 @@ export async function onRequestPost(context) {
 
   const lead = {
     name: clean(input.name, 120),
-    phone: clean(input.phone, 60),
+    phone: clean(input.phone, 60).replace(/\D/g, ''),
     email: clean(input.email, 160),
     services: (Array.isArray(input.services) ? input.services : [input.service])
       .map((service) => clean(service, 120))
@@ -41,8 +41,12 @@ export async function onRequestPost(context) {
     tracking: cleanTracking(input.tracking),
   };
 
-  if (!lead.name || !lead.phone || !lead.email || !lead.services.length) {
+  const validPhone = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/.test(lead.phone);
+  if (!lead.name || !lead.email || !lead.services.length) {
     return json({ ok: false, message: "Please complete all required fields." }, 400);
+  }
+  if (!validPhone) {
+    return json({ ok: false, message: "Enter a 10-digit U.S. phone number without +1." }, 400);
   }
 
   const webhookUrl = context.env.N8N_WEBHOOK_URL;

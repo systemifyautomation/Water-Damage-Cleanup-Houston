@@ -5,6 +5,8 @@
   "scripts": {
     "cloudflare:login": "wrangler login",
     "cloudflare:dev": "wrangler pages dev . --ip 127.0.0.1 --port 8788",
+    "test:site": "node scripts/verify-site.mjs",
+    "precloudflare:deploy": "npm run test:site",
     "cloudflare:deploy": "wrangler pages deploy . --project-name water-damage-cleanup-houston"
   },
   "devDependencies": {
