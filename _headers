@@ -1,0 +1,11 @@
+/assets/style.css
+  Cache-Control: no-cache, must-revalidate
+
+/assets/main.js
+  Cache-Control: no-cache, must-revalidate
+
+/assets/css/*
+  Cache-Control: no-cache, must-revalidate
+
+/assets/js/*
+  Cache-Control: no-cache, must-revalidate

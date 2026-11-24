@@ -2,6 +2,18 @@
 
 This is a static HTML site. Deploy the repository root directly to Cloudflare Pages; no build command is needed.
 
+## Estimate-form webhook
+
+The homepage estimate form submits to the Pages Function at `/api/estimate`, which forwards leads to n8n without exposing the webhook URL to the browser.
+
+For local development, put the n8n webhook URL in the ignored `.env` file:
+
+```dotenv
+N8N_WEBHOOK_URL=https://your-n8n-instance.example/webhook/your-webhook-id
+```
+
+For deployed environments, add `N8N_WEBHOOK_URL` as an encrypted secret in **Workers & Pages → this project → Settings → Variables and Secrets**. Set it for both Preview and Production before deploying.
+
 ## Project setup
 
 1. Install dependencies with `npm install`.

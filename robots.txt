@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://water-damage-cleanup-houston.com/sitemap.xml
