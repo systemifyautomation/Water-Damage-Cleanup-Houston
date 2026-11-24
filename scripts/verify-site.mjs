@@ -48,6 +48,20 @@ for (const file of htmlFiles) {
     if (!/\balt=["'][^"']*["']/i.test(match[0])) fail(file, 'image is missing an alt attribute');
   }
 
+  for (const match of html.matchAll(/<input\b[^>]*>/gi)) {
+    const input = match[0];
+    const type = input.match(/\btype=["']([^"']+)["']/i)?.[1].toLowerCase() || 'text';
+    const name = input.match(/\bname=["']([^"']+)["']/i)?.[1];
+    if (name && !['checkbox', 'hidden', 'range'].includes(type) && name !== 'website' && !/\bplaceholder=["'][^"']+["']/i.test(input)) {
+      fail(file, `input ${name} is missing a placeholder`);
+    }
+    if (type === 'tel') {
+      if (!/\bmaxlength=["']10["']/i.test(input)) fail(file, 'phone input must limit entries to 10 digits');
+      if (!/\binputmode=["']numeric["']/i.test(input)) fail(file, 'phone input must use the numeric keyboard');
+      if (!/\bpattern=["'][^"']*\[2-9\][^"']*\{4\}["']/i.test(input)) fail(file, 'phone input is missing the U.S. 10-digit validation pattern');
+    }
+  }
+
   for (const match of html.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)) {
     const href = match[1];
     if (!href || href === '#') fail(file, 'contains a non-crawlable placeholder link');
