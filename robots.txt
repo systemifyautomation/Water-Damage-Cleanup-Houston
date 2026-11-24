@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://water-damage-cleanup-houston.com/sitemap.xml
+Sitemap: https://water-damage-cleanup-houston.com/sitemap-images.xml

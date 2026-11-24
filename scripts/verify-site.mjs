@@ -74,6 +74,7 @@ for (const file of htmlFiles) {
 
 const robots = readFileSync(join(root, 'robots.txt'), 'utf8');
 if (!/Sitemap:\s*https:\/\/water-damage-cleanup-houston\.com\/sitemap\.xml/i.test(robots)) fail('robots.txt', 'missing the production sitemap declaration');
+if (!/Sitemap:\s*https:\/\/water-damage-cleanup-houston\.com\/sitemap-images\.xml/i.test(robots)) fail('robots.txt', 'missing the image sitemap declaration');
 
 const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/water-damage-cleanup-houston\.com[^<]*)<\/loc>/g)].map((match) => match[1]);
@@ -84,6 +85,19 @@ const expectedUrls = htmlFiles
 for (const url of expectedUrls) if (!sitemapUrls.includes(url)) fail('sitemap.xml', `missing indexable page ${url}`);
 for (const url of sitemapUrls) if (!expectedUrls.includes(url)) fail('sitemap.xml', `contains non-indexable or missing page ${url}`);
 if (new Set(sitemapUrls).size !== sitemapUrls.length) fail('sitemap.xml', 'contains duplicate URLs');
+
+const imageSitemap = readFileSync(join(root, 'sitemap-images.xml'), 'utf8');
+const imageUrls = [...imageSitemap.matchAll(/<image:loc>(https:\/\/water-damage-cleanup-houston\.com\/[^<]+)<\/image:loc>/g)].map((match) => match[1]);
+if (!imageUrls.length) fail('sitemap-images.xml', 'contains no image URLs');
+if (new Set(imageUrls).size !== imageUrls.length) fail('sitemap-images.xml', 'contains duplicate image URLs');
+for (const url of imageUrls) {
+  const localPath = join(root, decodeURIComponent(url.replace(`${domain}/`, '')));
+  if (!existsSync(localPath)) fail('sitemap-images.xml', `references a missing image ${url}`);
+}
+
+const homepage = readFileSync(join(root, 'index.html'), 'utf8');
+const homepageImages = [...homepage.matchAll(/<img\b[^>]*\bsrc=["'](assets\/[^"']+)["']/gi)].map((match) => `${domain}/${match[1]}`);
+for (const url of homepageImages) if (!imageUrls.includes(url)) fail('sitemap-images.xml', `is missing homepage image ${url}`);
 
 if (failures.length) {
   console.error(`\nSite verification failed with ${failures.length} issue(s):`);
