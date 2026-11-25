@@ -3,7 +3,9 @@ const form = document.querySelector("[data-estimate-form]");
 if (form) {
   const status = form.querySelector("[data-form-status]");
   const submit = form.querySelector("button[type=submit]");
+  const formName = form.dataset.formName || "homepage_estimate";
   const servicesSummary = form.querySelector("[data-services-summary]");
+  const servicesDropdown = form.querySelector(".service-multiselect");
   const serviceInputs = [...form.querySelectorAll("input[name=services]")];
 
   const trackingKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid", "msclkid"];
@@ -32,6 +34,12 @@ if (form) {
   };
 
   serviceInputs.forEach((input) => input.addEventListener("change", updateServicesSummary));
+  document.addEventListener("click", (event) => {
+    if (servicesDropdown.open && !servicesDropdown.contains(event.target)) servicesDropdown.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") servicesDropdown.open = false;
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -62,7 +70,7 @@ if (form) {
       if (response.ok && result.ok) {
         window.trackSiteEvent?.("generate_lead", {
           lead_type: "estimate_form",
-          form_name: "homepage_estimate",
+          form_name: formName,
           service_count: values.services.length,
           services: values.services.join(", "),
         });

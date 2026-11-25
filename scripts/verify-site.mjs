@@ -56,9 +56,10 @@ for (const file of htmlFiles) {
       fail(file, `input ${name} is missing a placeholder`);
     }
     if (type === 'tel') {
-      if (!/\bmaxlength=["']10["']/i.test(input)) fail(file, 'phone input must limit entries to 10 digits');
+      if (!/\bmaxlength=["']14["']/i.test(input)) fail(file, 'phone input must allow the formatted 10-digit number');
       if (!/\binputmode=["']numeric["']/i.test(input)) fail(file, 'phone input must use the numeric keyboard');
-      if (!/\bpattern=["'][^"']*\[2-9\][^"']*\{4\}["']/i.test(input)) fail(file, 'phone input is missing the U.S. 10-digit validation pattern');
+      if (!/\bdata-us-phone\b/i.test(input)) fail(file, 'phone input must use the shared U.S. phone formatter');
+      if (!/\bplaceholder=["']\(713\) 555-0123["']/i.test(input)) fail(file, 'phone input must show the formatted U.S. phone example');
     }
   }
 
@@ -105,6 +106,20 @@ const mainScript = readFileSync(join(root, 'assets/main.js'), 'utf8');
 if (!analyticsEvents.includes('"phone_call_click"')) fail('analytics-events.js', 'missing phone-call tracking event');
 if (!estimateEvents.includes('"generate_lead"')) fail('estimate-form.js', 'missing successful form-submission tracking event');
 if (!mainScript.includes('analytics-events.js')) fail('assets/main.js', 'does not load analytics event tracking');
+
+const contact = readFileSync(join(root, 'contact.html'), 'utf8');
+if (!/data-estimate-form/.test(contact)) fail('contact.html', 'must use the shared estimate form');
+if (!/data-form-name="contact_estimate"/.test(contact)) fail('contact.html', 'must identify contact-form leads');
+if (!/name="services"\s+type="checkbox"/.test(contact)) fail('contact.html', 'must support multiple service selections');
+
+const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
+if (!llms.includes('https://water-damage-cleanup-houston.com/estimate')) fail('llms.txt', 'is missing the estimate URL');
+for (const url of llms.match(/https:\/\/water-damage-cleanup-houston\.com\/[^\s)]+/g) || []) {
+  if (url.endsWith('.xml')) continue;
+  const path = url.replace(domain, '').replace(/^\//, '');
+  const file = path ? `${path}.html` : 'index.html';
+  if (!existsSync(join(root, file))) fail('llms.txt', `links to a missing page ${url}`);
+}
 
 if (failures.length) {
   console.error(`\nSite verification failed with ${failures.length} issue(s):`);
