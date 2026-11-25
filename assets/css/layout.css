@@ -34,6 +34,9 @@
 .grid--3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .grid--4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
 .split { align-items:center; display:grid; gap:3rem; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.contact-layout { align-items:start; }
+.contact-layout > div:first-child { max-width:510px; }
+.contact-layout h1 { font-size:clamp(2.5rem,4vw,3.75rem); max-width:none; }
 
 /* Keep each section's introduction in one readable content column. */
 .section .wrap > h1,
