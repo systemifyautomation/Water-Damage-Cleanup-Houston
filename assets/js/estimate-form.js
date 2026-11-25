@@ -60,6 +60,12 @@ if (form) {
       status.textContent = result.message || "Please try again.";
       status.hidden = false;
       if (response.ok && result.ok) {
+        window.trackSiteEvent?.("generate_lead", {
+          lead_type: "estimate_form",
+          form_name: "homepage_estimate",
+          service_count: values.services.length,
+          services: values.services.join(", "),
+        });
         form.reset();
         updateServicesSummary();
       }

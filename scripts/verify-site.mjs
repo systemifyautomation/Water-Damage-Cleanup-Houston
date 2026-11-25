@@ -99,6 +99,13 @@ const homepage = readFileSync(join(root, 'index.html'), 'utf8');
 const homepageImages = [...homepage.matchAll(/<img\b[^>]*\bsrc=["'](assets\/[^"']+)["']/gi)].map((match) => `${domain}/${match[1]}`);
 for (const url of homepageImages) if (!imageUrls.includes(url)) fail('sitemap-images.xml', `is missing homepage image ${url}`);
 
+const analyticsEvents = readFileSync(join(root, 'assets/js/analytics-events.js'), 'utf8');
+const estimateEvents = readFileSync(join(root, 'assets/js/estimate-form.js'), 'utf8');
+const mainScript = readFileSync(join(root, 'assets/main.js'), 'utf8');
+if (!analyticsEvents.includes('"phone_call_click"')) fail('analytics-events.js', 'missing phone-call tracking event');
+if (!estimateEvents.includes('"generate_lead"')) fail('estimate-form.js', 'missing successful form-submission tracking event');
+if (!mainScript.includes('analytics-events.js')) fail('assets/main.js', 'does not load analytics event tracking');
+
 if (failures.length) {
   console.error(`\nSite verification failed with ${failures.length} issue(s):`);
   for (const failure of failures) console.error(`- ${failure}`);
