@@ -32,6 +32,7 @@ for (const file of htmlFiles) {
   const h1Count = (html.match(/<h1(?:\s|>)/gi) || []).length;
 
   if (!title) fail(file, 'missing a page title');
+  if (/&(?:amp;)?(?:amp;)?/i.test(title)) fail(file, 'title must use words instead of an ampersand entity');
   if (indexable && (!description || description.length < 50)) fail(file, 'missing or too-short meta description');
   if (indexable && canonical !== `${domain}${pagePath(file)}`) fail(file, `canonical must be ${domain}${pagePath(file)}`);
   if (indexable && h1Count !== 1) fail(file, `expected one H1, found ${h1Count}`);

@@ -2,7 +2,8 @@
 .linklist a { border:1px solid var(--brand); display:block; padding:1rem; text-decoration:none; }
 .linklist a:hover,.linklist a:focus { color:var(--brand); text-decoration:underline; }
 .content-prose { margin-left:auto; margin-right:auto; text-align:left; }
-.content-prose h2 { text-align:center; }
+/* Long-form service-area content can contain several topic blocks in one section. */
+.content-prose h2 { margin:clamp(3rem,6vw,4.75rem) 0 .6em; text-align:center; }
 .inline-cta { margin-top:1.6rem; text-align:center; }
 .form-card { border:1px solid var(--brand); padding:clamp(1.4rem,4vw,2.5rem); } .field { margin-bottom:1.1rem; } .field label { display:block; font-size:.82rem; font-weight:700; letter-spacing:.08em; margin-bottom:.35rem; text-transform:uppercase; } .field input,.field select,.field textarea { background:var(--paper); border:1px solid var(--brand); border-radius:0; color:var(--ink); font:inherit; padding:.75rem; width:100%; } .field input:focus,.field select:focus,.field textarea:focus { box-shadow:0 0 0 3px var(--brand); outline:2px solid var(--paper); } .field textarea { min-height:140px; resize:vertical; } .form-row { display:grid; gap:1rem; grid-template-columns:repeat(2,minmax(0,1fr)); }
 .table-wrap { overflow-x:auto; } table { border-collapse:collapse; border:1px solid var(--brand); width:100%; } th,td { border:1px solid var(--brand); padding:.8rem; text-align:left; } th { background:var(--brand); color:var(--paper); } @media (max-width:600px) { .form-row,.linklist { grid-template-columns:1fr; } }
