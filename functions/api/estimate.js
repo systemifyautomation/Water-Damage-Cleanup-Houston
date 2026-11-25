@@ -41,7 +41,7 @@ export async function onRequestPost(context) {
     tracking: cleanTracking(input.tracking),
   };
 
-  const validPhone = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/.test(lead.phone);
+  const validPhone = /^\d{10}$/.test(lead.phone);
   if (!lead.name || !lead.email || !lead.services.length) {
     return json({ ok: false, message: "Please complete all required fields." }, 400);
   }

@@ -1,4 +1,4 @@
-const nationalPhonePattern = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+const nationalPhonePattern = /^\d{10}$/;
 
 const formatPhone = (digits) => {
   if (digits.length <= 3) return digits ? `(${digits}` : '';

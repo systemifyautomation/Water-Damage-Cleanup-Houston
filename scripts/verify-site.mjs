@@ -112,6 +112,11 @@ if (!/data-estimate-form/.test(contact)) fail('contact.html', 'must use the shar
 if (!/data-form-name="contact_estimate"/.test(contact)) fail('contact.html', 'must identify contact-form leads');
 if (!/name="services"\s+type="checkbox"/.test(contact)) fail('contact.html', 'must support multiple service selections');
 
+const formComponent = readFileSync(join(root, 'components/estimate-form.html'), 'utf8');
+if (!formComponent.includes('data-estimate-form')) fail('components/estimate-form.html', 'is missing the shared form hook');
+if (!formComponent.includes('data-us-phone')) fail('components/estimate-form.html', 'is missing the shared phone formatter');
+if (!formComponent.includes('data-services-summary')) fail('components/estimate-form.html', 'is missing the shared service selector');
+
 const llms = readFileSync(join(root, 'llms.txt'), 'utf8');
 if (!llms.includes('https://water-damage-cleanup-houston.com/estimate')) fail('llms.txt', 'is missing the estimate URL');
 for (const url of llms.match(/https:\/\/water-damage-cleanup-houston\.com\/[^\s)]+/g) || []) {
